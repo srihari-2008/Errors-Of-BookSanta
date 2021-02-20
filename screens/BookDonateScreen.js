@@ -3,6 +3,7 @@ import { Alert, StyleSheet, Text, View, TextInput, Modal, ScrollView, KeyboardAv
 import db from "../config"
 import firebase from "firebase"
 import { FlatList } from 'react-native-gesture-handler';
+import myHeader from "../components/myHeader"
 
 export default class BookDonateScreen extends React.Component{
     constructor(){
@@ -42,7 +43,9 @@ export default class BookDonateScreen extends React.Component{
         subtitle={item.reason_To_Request}
         titleStyle={{color:"black",fontWeight:"bold"}}
         rightElement={
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={()=>{
+                this.props.navigation.navigate("RecieverDetails",{"details":item})
+            }}>
 
             <Text style={{color:"red"}}>
                 view
@@ -58,6 +61,9 @@ export default class BookDonateScreen extends React.Component{
     render(){
         return(
             <View style={{flex:1}}>
+                <myHeader
+                title="Please Donate A Book" navigation={this.props.navigation}
+                />
                 {
                     this.state.requestedBookList.length===0?(
                         <View style={styles.subContainer}>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, StyleSheet, Text, View, TextInput, Modal, ScrollView, KeyboardAvoidingView,TouchableOpacity} from 'react-native';
 import db from "../config"
 import firebase from "firebase"
-
+import myHeader from "../components/myHeader"
 
 export default class BookRequestScreen extends React.Component{
     constructor(){
@@ -38,6 +38,9 @@ export default class BookRequestScreen extends React.Component{
     render(){
         return(
             <View style={{flex:1}}>
+                <myHeader
+                title="Please Request A Book" navigation={this.props.navigation}
+                />
                 <KeyboardAvoidingView style={styles.keyboardStyle}>
 
                 <TextInput 
