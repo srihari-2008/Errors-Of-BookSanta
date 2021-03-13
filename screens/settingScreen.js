@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, StyleSheet, Text, View, TextInput, Modal, ScrollView, KeyboardAvoidingView,TouchableOpacity} from 'react-native';
 import db from "../config"
 import firebase from "firebase"
-import myHeader from "../components/myHeader"
+import MyHeader from "../components/MyHeader"
 
 export default class settingScreen extends React.Component{
     constructor(){
@@ -58,7 +58,7 @@ export default class settingScreen extends React.Component{
   render(){
       return(
           <View style={{flex:1}}>
-              <myHeader
+              <MyHeader
               title="Setting Screen" navigation={this.props.navigation}
               />
               

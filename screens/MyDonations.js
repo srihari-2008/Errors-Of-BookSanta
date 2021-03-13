@@ -6,14 +6,32 @@ import { FlatList } from 'react-native-gesture-handler';
 import MyHeader from "../components/MyHeader"
 import {ListItem} from "react-native-elements"
 
-export default class BookDonateScreen extends React.Component{
+export default class MyDonations extends React.Component{
     constructor(){
         super()
         this.state={
+            donorId:firebase.auth().currentUser.email,
+            donorName:"",
             requestedBookList:[]
         }
         this.requestRef=null
     }
+
+    static navigationOptions={header:null}
+    getDonorDetails=(donorId)=>{
+        db.collection("users").where("EmailId","==",donorId).get()
+        .then(snapshot=>{
+            snapshot.forEach(doc=>{
+                this.setState({
+                   donorName:doc.data().FirstName+" "+doc.data().LastName
+        
+            
+                })
+            })
+             })
+    }
+
+
 
     getRequestedBookList=()=>{
      this.requestRef=db.collection("requested_books")

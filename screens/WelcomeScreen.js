@@ -22,7 +22,7 @@ constructor(){
 userLogin=(emailId,password)=>{
     firebase.auth().signInWithEmailAndPassword(emailId,password)
     .then(()=>{
-        return Alert.alert("Succesfully Logged In")
+        this.props.navigation.navigate("DonateBooks")
     })
     .catch((error)=>{
      var errorCode=error.code
@@ -42,7 +42,7 @@ userSignUp=(emailId,password,confirmPassword)=>{
     .then(()=>{
         db.collection("users").add({
          FirstName:this.state.firstName,
-         LastName:this.state.LastName,
+         LastName:this.state.lastName,
          Contact:this.state.contact,
          Address:this.state.address,
          EmailId:this.state.emailId   
@@ -70,7 +70,7 @@ return(
     <Modal
     animationType="fade"
     transparent={true}
-    visible={isModalVisible}
+    visible={this.state.isModalVisible}
     >
     <View style={styles.modalContainer}>
         <ScrollView style={{width:"100%"}}>
@@ -166,7 +166,9 @@ return(
             <Text style={styles.title}>
             BookSanta
             </Text>
-
+            {
+              this.showModal()
+            }
             <TextInput 
               style={styles.loginBox}
               placeholder="Enter Your Email Id , Ex-abc@gmail.com"

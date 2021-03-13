@@ -2,8 +2,8 @@ import React from 'react';
 import { Alert, StyleSheet, Text, View, TextInput, Modal, ScrollView, KeyboardAvoidingView,TouchableOpacity} from 'react-native';
 import db from "../config"
 import firebase from "firebase"
-import myHeader from "../components/myHeader"
-import {Card,Icon} from 'react-native-elements'
+import {Card,Icon,Header} from 'react-native-elements'
+
 
 export default class RecieverDetailsScreen extends React.Component{
     constructor(props){
@@ -17,7 +17,8 @@ export default class RecieverDetailsScreen extends React.Component{
             recieverName:"",
             recieverContact:"",
             recieverAddress:"",
-            recieverRequestDocId:""
+            recieverRequestDocId:"",
+            userName:""
         }
     }
 
@@ -46,6 +47,20 @@ db.collection("requested_books").where("request_Id","==", this.state.requestId).
      })
 }
 
+getUserDetails=(userId)=>{
+    db.collection("users").where("EmailId","==",userId).get()
+    .then(snapshot=>{
+        snapshot.forEach(doc=>{
+            this.setState({
+               userName:doc.data().FirstName+" "+doc.data().LastName
+    
+        
+            })
+        })
+         })
+
+    
+}
 
 UpdateBookStatus=()=>{
     db.collection("all_donations").add({
@@ -60,7 +75,116 @@ UpdateBookStatus=()=>{
 
 componentDidMount(){
     this.getRecieverDetails()
+    this.getUserDetails(this.state.userId)
+    
+    
+}
+
+AddNotification=()=>{
+    var message=this.state.userName+"Has Shown Interest In Donating The Book"
+    db.collection("all_notifications").add({
+        Targeted_User_Id:this.state.recieverId,
+        donor_Id:this.state.userId,
+        request_id:this.state.requestId,
+        Book_Name:this.state.BookName,
+        NotificationStatus:"UnRead",
+        message:message
+    })
 }
 
 
+render(){
+    return(
+    <View>
+        <Header
+        leftComponent={<Icon
+        name="arrow-left" type ="feather" color="blue" onPress={()=>{
+            this.props.navigation.goBack()
+        }}
+        />}
+        centerComponent={{text:"donateBooks",style:{color:"black",fontSize:20,fontWeight:"bold"}}}
+         backgroundColor="green"
+        />
+        <Card title={"BookInformation"}
+        titleStyle={{fontSize:20}}
+        >
+            <Card>
+                <Text style={{fontWeight:"bold"}}>
+                name:{this.state.BookName}    
+                </Text>
+            </Card>
+
+            <Card>
+                <Text style={{fontWeight:"bold"}}>
+                reason:{this.state.reasonToRequest}    
+                </Text>
+            </Card>
+
+            
+        </Card>
+
+        <Card title={"RecieverInformation"}
+        titleStyle={{fontSize:20}}
+        >
+            <Card>
+                <Text style={{fontWeight:"bold"}}>
+                name:{this.state.recieverName}    
+                </Text>
+            </Card>
+
+            <Card>
+                <Text style={{fontWeight:"bold"}}>
+                contact:{this.state.recieverContact}    
+                </Text>
+            </Card>
+
+            <Card>
+                <Text style={{fontWeight:"bold"}}>
+                address:{this.state.recieverAddress}    
+                </Text>
+            </Card>
+
+            
+        </Card>
+        {
+            this.state.recieverId!==this.state.userId?(
+                <TouchableOpacity style={styles.button} onPress={()=>{
+                    this.UpdateBookStatus()
+                    this.AddNotification()
+                    this.props.navigation.navigate("MyDonations")
+                }}>
+                <Text>
+                    I want to Donate
+                </Text>
+                </TouchableOpacity>
+            ):null
+
+        }
+        
+    </View>
+    )
+
+
 }
+
+}
+
+const styles=StyleSheet.create({
+    button:{
+        width:300,
+        height:50,
+        justifyContent:'center',
+        alignItems:'center',
+        borderRadius:25,
+        backgroundColor:"#ff9800",
+        shadowColor: "#000",
+        shadowOffset: {
+           width: 0,
+           height: 8,
+        },
+        shadowOpacity: 0.30,
+        shadowRadius: 10.32,
+        elevation: 16,
+        padding: 10
+      },
+})
