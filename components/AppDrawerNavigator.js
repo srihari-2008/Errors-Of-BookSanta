@@ -3,6 +3,7 @@ import {createDrawerNavigator} from "react-navigation-drawer"
 import {AppTabNavigator} from "./AppTabNavigator"
 import CustomSideBarMenu from "./CustomSidebarMenu"
 import settingScreen from "../screens/settingScreen"
+import NotificationScreen from "../screens/NotificationScreen"
  
 export const AppDrawerNavigator= createDrawerNavigator({
     Home:{
@@ -11,7 +12,12 @@ export const AppDrawerNavigator= createDrawerNavigator({
     },
     Setting:{
         screen:settingScreen
-    }
+    },
+     
+     Notification:{
+         screen:NotificationScreen
+     }
+
 },
       {
     contentComponent:CustomSideBarMenu,
