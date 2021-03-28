@@ -4,11 +4,12 @@ import db from "../config"
 import firebase from "firebase"
 import { FlatList } from 'react-native-gesture-handler';
 import MyHeader from "../components/MyHeader"
-import {ListItem} from "react-native-elements"
+import {ListItem,Icon} from "react-native-elements"
+import SwipeableFlatlist from "../components/SwipeableFlatlist"
 
 export default class NotificationScreen extends React.Component{
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state={
             allNotifications:[],
             userId:firebase.auth().currentUser.email
@@ -17,7 +18,7 @@ export default class NotificationScreen extends React.Component{
     }
 
     getNotifications=()=>{
-     this.requestRef=db.collection("all_notifications").where("NotificationStatus","==","UnRead").where("Targeted_User_Id","==","this.state.userId")
+     this.requestRef=db.collection("all_notifications").where("NotificationStatus","==","UnRead").where("Targeted_User_Id","==",this.state.userId)
      .onSnapshot((snapshot)=>{
          var allNotifications=[]
       snapshot.docs.map(docs=>{
@@ -71,11 +72,9 @@ export default class NotificationScreen extends React.Component{
                             </Text>
                             </View>
                     ):(
-                        <FlatList
-                        keyExtractor={this.keyExtractor}
-                        data={this.state.allNotifications}
-                        renderItem={this.renderItem}
-                        />
+                      <SwipeableFlatlist
+                      allNotifications={this.state.allNotifications}
+                      />
                     )
                      
                 }

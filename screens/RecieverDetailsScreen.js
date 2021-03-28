@@ -65,7 +65,7 @@ getUserDetails=(userId)=>{
 UpdateBookStatus=()=>{
     db.collection("all_donations").add({
         BookName:this.state.BookName,
-        request_Id:this.state.request_Id,
+        request_Id:this.state.requestId,
         RequestedBy:this.state.recieverName,
         donor_Id:this.state.userId,
         request_status:"donorInterested"
@@ -106,16 +106,16 @@ render(){
          backgroundColor="green"
         />
         <Card title={"BookInformation"}
-        titleStyle={{fontSize:20}}
+        titleStyle={{fontSize:15}}
         >
             <Card>
-                <Text style={{fontWeight:"bold"}}>
+                <Text style={{fontWeight:"bold",fontSize:10}}>
                 name:{this.state.BookName}    
                 </Text>
             </Card>
 
             <Card>
-                <Text style={{fontWeight:"bold"}}>
+                <Text style={{fontWeight:"bold",fontSize:10}}>
                 reason:{this.state.reasonToRequest}    
                 </Text>
             </Card>
@@ -124,22 +124,22 @@ render(){
         </Card>
 
         <Card title={"RecieverInformation"}
-        titleStyle={{fontSize:20}}
+        titleStyle={{fontSize:15}}
         >
             <Card>
-                <Text style={{fontWeight:"bold"}}>
+                <Text style={{fontWeight:"bold",fontSize:10}}>
                 name:{this.state.recieverName}    
                 </Text>
             </Card>
 
             <Card>
-                <Text style={{fontWeight:"bold"}}>
+                <Text style={{fontWeight:"bold",fontSize:10}}>
                 contact:{this.state.recieverContact}    
                 </Text>
             </Card>
 
             <Card>
-                <Text style={{fontWeight:"bold"}}>
+                <Text style={{fontWeight:"bold",fontSize:10}}>
                 address:{this.state.recieverAddress}    
                 </Text>
             </Card>

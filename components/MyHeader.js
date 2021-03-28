@@ -28,7 +28,7 @@ bellIcon=()=>{
     return(
         <View>
             <Icon
-            name="bell" type="font_awesome " color="blue" size={25}
+            name="bell" type="font-awesome" color="white" size={25}
             onPress={()=>{
                 this.props.navigation.navigate("Notification")
             }}

@@ -109,7 +109,7 @@ export default class MyDonations extends React.Component{
         titleStyle={{color:"black",fontWeight:"bold"}}
         leftElement={<Icon name="book" type="font-awesome" color="blue"/>}
         rightElement={
-            <TouchableOpacity styles={[styles.button,{background:item.request_status==="Book Sent"?"green":"red"}]} onPress={()=>{
+            <TouchableOpacity style={[styles.button,{backgroundColor:item.request_status==="Book Sent"?"green":"blue"}]} onPress={()=>{
                this.sendBook(item)
             }}>
 
